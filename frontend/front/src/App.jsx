@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
-import './App.css'
-import './index.css'
-import Navbar from './components/Navbar.jsx'
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar.jsx";
+import Home from "./components/Home.jsx";
+import Domains from "./components/Domains.jsx";
 
 function App() {
-
   return (
-   <div>
-    < Navbar/>
-   </div>
-  )
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/domains" element={<Domains />} />
+        {/* You can add more pages later: Plays, Memories, etc */}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
