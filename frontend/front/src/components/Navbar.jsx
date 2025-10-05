@@ -1,205 +1,128 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.jpeg";
+import { Search, Home, CalendarDays, Theater, Users, Camera, Phone, Info } from "lucide-react"; // Theatre-related icons
 
 function Navbar() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Left section: Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link to="/">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Theatron Logo"
-              />
-            </Link>
-          </div>
-
-          {/* Center section: Desktop links */}
-          <div className="hidden sm:flex sm:space-x-4 sm:items-center">
-            {/* Home */}
-            <Link
-              to="/"
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-            >
-              Home
-            </Link>
-
-            {/* Dashboard Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 hover:bg-gray-700"
-              >
-                Dashboard ▾
-              </button>
-
-              {isDropdownOpen && (
-                <div className="absolute mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black/5 z-10">
-                  <Link
-                    to="/domains"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Domains
-                  </Link>
-                  <Link
-                    to="/plays"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Plays
-                  </Link>
-                  <Link
-                    to="/memories"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Memories
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Other links */}
-            <Link
-              to="/team"
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-            >
-              Team
-            </Link>
-            <Link
-              to="/projects"
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-            >
-              Projects
-            </Link>
-            <Link
-              to="/calendar"
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-            >
-              Calendar
-            </Link>
-          </div>
-
-          {/* Right section: Profile / Mobile button */}
-          <div className="flex items-center">
-            {/* Mobile menu button */}
-            <div className="sm:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
-              >
-                <span className="sr-only">Open main menu</span>
-                {!isMobileMenuOpen ? (
-                  <svg
-                    className="block h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="block h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
-
-            {/* Profile Image */}
-            <div className="ml-3">
-              <img
-                className="h-8 w-8 rounded-full bg-gray-800"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-                alt="Profile"
-              />
-            </div>
-          </div>
+    <div className="bg-[#1a0e0f] text-white shadow-lg">
+      {/* Top Search Bar */}
+      <div className="bg-[#2d1416] py-2 px-4 flex items-center justify-between">
+        {/* Logo + Title */}
+        <div className="flex items-center space-x-3 cursor-pointer">
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Theatron Logo"
+              className="h-10 w-auto rounded-lg shadow-md"
+            />
+          </Link>
+          <h1 className="text-xl font-bold tracking-wide text-[#e6b17e]">
+            THEATRON
+          </h1>
         </div>
+
+        {/* Search bar */}
+        <div className="flex items-center bg-[#f4f1ef] text-black rounded-full px-4 py-1 w-full max-w-md">
+          <Search className="h-5 w-5 text-[#864c52] mr-2" />
+          <input
+            type="text"
+            placeholder="Search for events, plays, memories..."
+            className="bg-transparent focus:outline-none w-full text-sm"
+          />
+        </div>
+
+        {/* Sign In Button */}
+        <Link
+          to="/signin"
+          className="bg-[#e6b17e] text-[#1a0e0f] px-4 py-1 rounded-md font-semibold text-sm hover:bg-[#f4f1ef] hover:text-[#864c52] transition"
+        >
+          Sign In
+        </Link>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="sm:hidden bg-gray-800">
-          <Link
-            to="/"
-            className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Home
-          </Link>
-
-          {/* Dashboard Mobile Dropdown */}
-          <div className="px-4 py-2">
-            <button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full text-left text-white bg-gray-900 px-3 py-2 rounded-md font-medium"
-            >
-              Dashboard ▾
-            </button>
-            {isDropdownOpen && (
-              <div className="mt-1 ml-2">
-                <Link
-                  to="/domains"
-                  className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Domains
-                </Link>
-                <Link
-                  to="/plays"
-                  className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Plays
-                </Link>
-                <Link
-                  to="/memories"
-                  className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  Memories
-                </Link>
-              </div>
-            )}
+      {/* Navigation Bar */}
+      <nav className="px-4 sm:px-10">
+        <div className="flex justify-between items-center h-14">
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex space-x-8">
+            <NavItem to="/" icon={<Home />} label="Home" />
+            <NavItem to="/events" icon={<CalendarDays />} label="Events" />
+            <NavItem to="/domains" icon={<Users />} label="Domains" />
+            <NavItem to="/plays" icon={<Theater />} label="Plays" />
+            <NavItem to="/memories" icon={<Camera />} label="Memories" />
+            <NavItem to="/contact" icon={<Phone />} label="Contact" />
+            <NavItem to="/about" icon={<Info />} label="About Us" />
           </div>
 
-          <Link
-            to="/team"
-            className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Team
-          </Link>
-          <Link
-            to="/projects"
-            className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Projects
-          </Link>
-          <Link
-            to="/calendar"
-            className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Calendar
-          </Link>
+          {/* Mobile Menu Toggle */}
+          <div className="sm:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-[#e6b17e] hover:text-white p-2 rounded-md"
+            >
+              {!isMobileMenuOpen ? (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              ) : (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
-      )}
-    </nav>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="sm:hidden bg-[#2d1416] text-[#f4f1ef] py-3 space-y-2">
+            <MobileNavItem to="/" label="Home" />
+            <MobileNavItem to="/events" label="Events" />
+            <MobileNavItem to="/domains" label="Domains" />
+            <MobileNavItem to="/plays" label="Plays" />
+            <MobileNavItem to="/memories" label="Memories" />
+            <MobileNavItem to="/contact" label="Contact" />
+            <MobileNavItem to="/about" label="About Us" />
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+}
+
+function NavItem({ to, icon, label }) {
+  return (
+    <Link
+      to={to}
+      className="flex items-center space-x-2 text-[#f4f1ef] hover:text-[#e6b17e] transition duration-200"
+    >
+      <span className="h-5 w-5">{icon}</span>
+      <span className="text-sm font-medium">{label}</span>
+    </Link>
+  );
+}
+
+function MobileNavItem({ to, label }) {
+  return (
+    <Link
+      to={to}
+      className="block px-4 py-2 hover:bg-[#864c52] transition text-sm font-medium"
+    >
+      {label}
+    </Link>
   );
 }
 
