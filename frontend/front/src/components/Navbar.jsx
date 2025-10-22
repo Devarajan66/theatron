@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.jpeg";
-import { Search, Home, CalendarDays, Theater, Users, Camera, Phone, Info } from "lucide-react"; // Theatre-related icons
+import { Search, Home, CalendarDays, Theater, Users, Camera, Phone, Info } from "lucide-react";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const navLinks = [
+    { name: "Home", path: "/", icon: <Home /> },
+    { name: "Events", path: "/events", icon: <CalendarDays /> },
+    { name: "Domains", path: "/domains", icon: <Users /> },
+    { name: "Plays", path: "/play", icon: <Theater /> }, // match App.jsx
+    { name: "Memories", path: "/memories", icon: <Camera /> },
+    { name: "Contact", path: "/contact", icon: <Phone /> },
+    { name: "About Us", path: "/about", icon: <Info /> },
+  ];
 
   return (
     <div className="bg-[#1a0e0f] text-white shadow-lg">
@@ -13,15 +24,9 @@ function Navbar() {
         {/* Logo + Title */}
         <div className="flex items-center space-x-3 cursor-pointer">
           <Link to="/">
-            <img
-              src={logo}
-              alt="Theatron Logo"
-              className="h-10 w-auto rounded-lg shadow-md"
-            />
+            <img src={logo} alt="Theatron Logo" className="h-10 w-auto rounded-lg shadow-md" />
           </Link>
-          <h1 className="text-xl font-bold tracking-wide text-[#e6b17e]">
-            THEATRON
-          </h1>
+          <h1 className="text-xl font-bold tracking-wide text-[#e6b17e]">THEATRON</h1>
         </div>
 
         {/* Search bar */}
@@ -48,13 +53,18 @@ function Navbar() {
         <div className="flex justify-between items-center h-14">
           {/* Desktop Menu */}
           <div className="hidden sm:flex space-x-8">
-            <NavItem to="/" icon={<Home />} label="Home" />
-            <NavItem to="/events" icon={<CalendarDays />} label="Events" />
-            <NavItem to="/domains" icon={<Users />} label="Domains" />
-            <NavItem to="/plays" icon={<Theater />} label="Plays" />
-            <NavItem to="/memories" icon={<Camera />} label="Memories" />
-            <NavItem to="/contact" icon={<Phone />} label="Contact" />
-            <NavItem to="/about" icon={<Info />} label="About Us" />
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`flex items-center space-x-2 text-[#f4f1ef] hover:text-[#e6b17e] transition duration-200 ${
+                  location.pathname === link.path ? "text-yellow-400 border-b-2 border-yellow-400 pb-1" : ""
+                }`}
+              >
+                <span className="h-5 w-5">{link.icon}</span>
+                <span className="text-sm font-medium">{link.name}</span>
+              </Link>
+            ))}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -64,21 +74,11 @@ function Navbar() {
               className="text-[#e6b17e] hover:text-white p-2 rounded-md"
             >
               {!isMobileMenuOpen ? (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               ) : (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               )}
@@ -89,40 +89,20 @@ function Navbar() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="sm:hidden bg-[#2d1416] text-[#f4f1ef] py-3 space-y-2">
-            <MobileNavItem to="/" label="Home" />
-            <MobileNavItem to="/events" label="Events" />
-            <MobileNavItem to="/domains" label="Domains" />
-            <MobileNavItem to="/plays" label="Plays" />
-            <MobileNavItem to="/memories" label="Memories" />
-            <MobileNavItem to="/contact" label="Contact" />
-            <MobileNavItem to="/about" label="About Us" />
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block px-4 py-2 hover:bg-[#864c52] transition text-sm font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
         )}
       </nav>
     </div>
-  );
-}
-
-function NavItem({ to, icon, label }) {
-  return (
-    <Link
-      to={to}
-      className="flex items-center space-x-2 text-[#f4f1ef] hover:text-[#e6b17e] transition duration-200"
-    >
-      <span className="h-5 w-5">{icon}</span>
-      <span className="text-sm font-medium">{label}</span>
-    </Link>
-  );
-}
-
-function MobileNavItem({ to, label }) {
-  return (
-    <Link
-      to={to}
-      className="block px-4 py-2 hover:bg-[#864c52] transition text-sm font-medium"
-    >
-      {label}
-    </Link>
   );
 }
 
